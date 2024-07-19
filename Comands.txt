@@ -1,0 +1,72 @@
+# basics
+$ ansible --version
+output:
+config file = None
+configured module search path = ['/home/osboxes/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+ansible python module location = /home/osboxes/.local/lib/python3.10/site-packages/ansible
+ansible collection location = /home/osboxes/.ansible/collections:/usr/share/ansible/collections
+executable location = /home/osboxes/.local/bin/ansible
+python version = 3.10.12 (main, Mar 22 2024, 16:50:05) [GCC 11.4.0] (/usr/bin/python3)
+jinja version = 3.1.4
+libyaml = True
+
+## documentation tool
+$ ansible-doc -h
+# list available plugins
+$ ansible-doc -l
+# Show playbook snippet for these plugin types: inventory, lookup, module
+$ ansible-doc -s ping
+output: 
+- name: Try to connect to host, verify a usable python and return `pong' on success
+  ping:
+      data: # Data to return for the `ping' return value. If this parameter is set to `crash', the module will cause an exception.
+
+## Ansible ad-hoc Commands
+# ping - Try to connect to host, verify a usable python and return pong on success
+$ ansible -i maquinas all -m ping
+
+# command - Execute commands on targets
+ansible -i maquinas all -m command -a "date"
+ansible -i maquinas all -m command -a "ls -la"
+ansible -i maquinas all -m command -a "touch /tmp/ansible.txt"
+ansible -i maquinas all -m shell -a "ls -l / grep p"
+
+# setup - Gathers facts about remote hosts
+ansible -i maquinas all -m setup
+
+# copy - Copy files to remote locations
+ansible -i maquinas all -m copy -a "src=test.txt dest=/tmp/test.txt"
+
+# apt - Manages apt-packages
+# yum - Manages packages with the yum package manager
+ansible -i maquinas web -m apt -a "name=apache2 state=present"
+ansible -i maquinas web -m yum -a "name=httpd state=present"
+
+# service - Manage services
+ansible -i maquinas web -m service -a "name=apache2 state=stopped"
+
+#Escalar Privilegios (become)
+ansible -i maquinas web -m service -a "name=apache2 state=started" --become
+1. Proporcionar passwd en la línea de comando: --ask-become-pass
+2. Configurar la contraseña sudo en el inventario: ansible_become_pass=passwd_sudo
+3. Crear un archivo cifrado con ansible-vault:
+$ ansible-vault create secret_vars.yml
+# Agrega passwd sudo en el archivo secret_vars.yml de la siguiente manera:
+ansible_become_pass: "passwd_sudo"
+Ejecutar el comando con ansible-vault:
+$ ansible -i maquinas web -m apt -a "name=apache2 state=present" --become --extra-vars "@secret_vars.yml"
+
+
+## Configuration
+$ ansible-config
+$ ansible-config init
+$ ansible-config init --disabled > ansible.cfg
+$ ansible-config init --disabled -t all > ansible.cfg
+
+##Inventarios
+# default /etc/ansible/hosts
+# con -i inventarios se cambia la ruta por omisi�n
+# Es posible incluir varios inventarios
+$ ansible -i inv1 -i inv2
+$ ansible -i inventario all --list-host
+$ ansible -i inventario ungrouped (maquinas sin agrupar)

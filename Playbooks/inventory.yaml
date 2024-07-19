@@ -1,0 +1,9 @@
+# Ansible Inventory in YAML format
+all:
+  hosts:
+    web:
+      ansible_host: 192.168.20.66
+      ansible_ssh_pass: osboxes.org
+    db:
+      ansible_host: 192.168.20.68
+      ansible_ssh_pass: osboxes.org

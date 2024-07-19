@@ -1,0 +1,28 @@
+---
+- name: Ping, Test Connectivity to target Servers
+  hosts: all
+  tasks:
+  - name: Ping
+    ping:
+
+- name: Install nginx
+  hosts: web
+  become: yes
+  tasks:
+  - name: Stop service apache
+    include_tasks: stop_apache.yaml
+  - name: Install nginx
+    apt:
+      name: nginx
+      state: present
+      update_cache: true
+  - name: Start service nginx
+    service:
+      name: nginx
+      state: started
+  - name: Uddate index.html 
+    # If follow=yes, /path/to/file will be overwritten by contents of foo.conf
+    copy:
+      src: index.html
+      dest: /var/www/html  # link to /path/to/file
+      follow: yes
