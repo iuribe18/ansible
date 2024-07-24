@@ -1,0 +1,17 @@
+---
+- name: Test with local variables
+  hosts: web
+  vars:
+    v1: "Global Variable"
+  
+  tasks:
+    - name: Local Variables
+      vars: 
+        v1: "Var task 1"
+      debug:  # debug – Print statements during execution
+        msg: "Available Environments: {{v1}}"
+    - name: Local Variables
+      vars: 
+        v2: "Var task 1"
+      debug:  # debug – Print statements during execution
+        msg: "Available Environments: {{v2}}"

@@ -1,0 +1,14 @@
+---
+- name: Test with External Variables
+  hosts: web
+  vars_files:
+     - Ansible_Resources/foo.yaml
+     - Ansible_Resources/test.yaml
+  tasks:
+  - name: First External Variable
+    debug:
+      msg: "This is the value of first variable --> {{f1}}"
+
+  - name: Second External Variable
+    debug:
+      msg: "This is the value of second variable --> {{f2}}"

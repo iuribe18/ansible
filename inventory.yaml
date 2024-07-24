@@ -1,0 +1,23 @@
+all:
+  hosts:
+    ubuntu:
+      puerto: 9090
+      entorno: develop
+    debian:
+  children:
+    debian:
+      hosts:
+        debian1:
+        debian2:
+      vars:
+        ansible_user: ansible
+    rocky:
+      hosts:
+        rocky1:
+        rocky2:
+    datos:
+      hosts:
+        mysql:
+    aplicaciones:
+      hosts:
+        web:

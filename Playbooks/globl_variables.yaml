@@ -1,0 +1,47 @@
+# ---
+# - name: Test with variables
+#   hosts: web
+#   tasks:
+#     - name: See variables
+#       debug:  # debug – Print statements during execution
+#         msg: This is a test
+
+
+---
+- name: Test with variables
+  hosts: web
+  vars:
+    - message: "This is a message"
+    - curso: "from Ansible course"
+    - environments: # List
+      - dev
+      - test
+      - prod
+    - languages: ["python, java", "c++"]
+    - architecture: # Dictionary
+        type: linux
+        ram: 4Gb
+        storage: 500Gb
+  tasks:
+    - name: See variables
+      debug:  # debug – Print statements during execution
+        msg: "Available Environments: {{environments}}"
+    - name: See an element in the List
+      debug:  # debug – Print statements during execution
+        msg: "Available Environments: {{environments[0]}}"
+    - name: See various elements in the List
+      debug:  # debug – Print statements during execution
+        msg: "Available Environments: {{environments[0:3]}}"
+    - name: Show each environment
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ environments }}"
+    - name: See Languages
+      debug:  # debug – Print statements during execution
+        msg: "Languages: {{languages}}"
+    - name: Dictionaries
+      debug:  # debug – Print statements during execution
+        msg: "Languages: {{architecture}}"
+    - name: Dictionaries
+      debug:  # debug – Print statements during execution
+        msg: "Languages: {{architecture.type}}"

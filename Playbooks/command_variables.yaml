@@ -1,0 +1,10 @@
+---
+- name: Prueba con Variables desde linea de comandos
+  hosts: db
+  
+  tasks:
+  - name: Command Variables
+    debug:
+      msg: "Command message: {{message}}"  # Type message in the prompt
+                                            # ansible-playbook command_variables.yaml --extre_vars "message = Ansible"
+                                            # ansible-playbook command_variables.yaml --extre_vars "message = 'Several Lines in Ansible Message'"

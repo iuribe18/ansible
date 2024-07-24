@@ -1,0 +1,13 @@
+---
+- name: Test with Inventory variables
+  hosts: db
+  
+  tasks:
+    - name: Local Variables
+      vars: 
+        v1: "Var task 1"
+      debug:  # debug – Print statements during execution
+        msg: "Available Environments: {{v1}}"
+    - name: Variable from Inventory
+      debug:  # debug – Print statements during execution
+        msg: "Available Environments: {{v2}}"

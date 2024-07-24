@@ -33,6 +33,8 @@ ansible -i maquinas all -m shell -a "ls -l / grep p"
 
 # setup - Gathers facts about remote hosts
 ansible -i maquinas all -m setup
+ansible -i maquinas all -m setup -a 'filter=ansible_system'
+ansible -i maquinas all -m setup -a 'filter=ansible_system,ansible_os_family'
 
 # copy - Copy files to remote locations
 ansible -i maquinas all -m copy -a "src=test.txt dest=/tmp/test.txt"

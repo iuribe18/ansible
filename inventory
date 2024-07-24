@@ -3,10 +3,13 @@
 # is also possible to use: localhost ansible_connection=localhost
 osboxes ansible_host=192.168.1.18 ansible_ssh_pass=osboxes.org
 target ansible_host=192.168.1.21 ansible_ssh_pass=osboxes.org
+db v2="Inventory variable"
 
-#[mail] # That�s means a group of mail servers
+#[mail] # That's means a group of mail servers
 #mail.example.com
 #mail2.example.com
+#[mail:vars] # Variables for the entire group
+ansible_user=ansible
 
 #[db] # That�s means a group of db servers
 #db.example.com
